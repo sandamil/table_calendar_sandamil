@@ -4,7 +4,7 @@
 part of table_calendar_null_safe;
 
 /// Callback exposing currently selected day.
-typedef void OnDaySelected(DateTime day, List events, List holidays);
+typedef void OnDaySelected(DateTime day, List events, List marks, List holidays);
 
 /// Callback exposing currently visible days (first and last of them), as well as current `CalendarFormat`.
 typedef void OnVisibleDaysChanged(
@@ -68,7 +68,9 @@ class TableCalendar extends StatefulWidget {
   /// `Map` of events.
   /// Each `DateTime` inside this `Map` should get its own `List` of objects (i.e. events).
   final Map<DateTime, List> events;
-
+  /// `Map` of marks.
+  /// Each `DateTime` inside this `Map` should get its own `List` of objects (i.e. marks).
+  final Map<DateTime, List> marks;
   /// `Map` of holidays.
   /// This property allows you to provide custom holiday rules.
   final Map<DateTime, List> holidays;
@@ -176,6 +178,8 @@ class TableCalendar extends StatefulWidget {
     required this.calendarController,
     this.locale,
     this.events = const {},
+    this.marks = const {},
+
     this.holidays = const {},
     this.onDaySelected,
     this.onDayLongPressed,
@@ -230,6 +234,7 @@ class _TableCalendarState extends State<TableCalendar>
 
     widget.calendarController._init(
       events: widget.events,
+      marks: widget.marks,
       holidays: widget.holidays,
       initialDay: widget.initialSelectedDay,
       initialFormat: widget.initialCalendarFormat,
@@ -266,6 +271,7 @@ class _TableCalendarState extends State<TableCalendar>
       widget.onDaySelected!(
         day,
         widget.calendarController.visibleEvents[_getEventKey(day)] ?? [],
+        widget.calendarController.visibleMarks[_getMarkKey(day)] ?? [],
         widget.calendarController.visibleHolidays[_getHolidayKey(day)] ?? [],
       );
     }
@@ -295,6 +301,7 @@ class _TableCalendarState extends State<TableCalendar>
       widget.onDayLongPressed!(
         day,
         widget.calendarController.visibleEvents[_getEventKey(day)] ?? [],
+        widget.calendarController.visibleMarks[_getMarkKey(day)] ?? [],
         widget.calendarController.visibleHolidays[_getHolidayKey(day)] ?? [],
       );
     }
@@ -358,6 +365,10 @@ class _TableCalendarState extends State<TableCalendar>
 
   DateTime? _getEventKey(DateTime day) {
     return widget.calendarController._getEventKey(day);
+  }
+
+   DateTime? _getMarkKey(DateTime day) {
+    return widget.calendarController._getMarkKey(day);
   }
 
   DateTime? _getHolidayKey(DateTime day) {
@@ -628,6 +639,7 @@ class _TableCalendarState extends State<TableCalendar>
     Widget content = _buildCellContent(date);
 
     final eventKey = _getEventKey(date);
+    final markKey = _getMarkKey(date);
     final holidayKey = _getHolidayKey(date);
     final key = eventKey ?? holidayKey;
 
@@ -635,6 +647,9 @@ class _TableCalendarState extends State<TableCalendar>
       final children = <Widget>[content];
       final events = eventKey != null
           ? widget.calendarController.visibleEvents[eventKey]
+          : [];
+      final marks = markKey != null
+          ? widget.calendarController.visibleMarks[markKey]
           : [];
       final holidays = holidayKey != null
           ? widget.calendarController.visibleHolidays[holidayKey]
@@ -647,6 +662,7 @@ class _TableCalendarState extends State<TableCalendar>
               context,
               key,
               events ?? [],
+              marks ?? [],
               holidays ?? [],
             ),
           );
@@ -695,6 +711,7 @@ class _TableCalendarState extends State<TableCalendar>
 
   Widget _buildCellContent(DateTime date) {
     final eventKey = _getEventKey(date);
+    final markKey = _getMarkKey(date);
 
     final tIsUnavailable = _isDayUnavailable(date);
     final tIsSelected = widget.calendarController.isSelected(date);
@@ -732,34 +749,44 @@ class _TableCalendarState extends State<TableCalendar>
 
     if (isUnavailable) {
       return widget.builders.unavailableDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (isSelected && widget.calendarStyle.renderSelectedFirst) {
       return widget.builders.selectedDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (isToday) {
       return widget.builders.todayDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (isSelected) {
       return widget.builders.selectedDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (isOutsideHoliday) {
       return widget.builders.outsideHolidayDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (isHoliday) {
       return widget.builders.holidayDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (isOutsideWeekend) {
       return widget.builders.outsideWeekendDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (isOutside) {
       return widget.builders.outsideDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (isWeekend) {
       return widget.builders.weekendDayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else if (widget.builders.dayBuilder != null) {
       return widget.builders.dayBuilder!(context, date,
-          widget.calendarController.visibleEvents[eventKey] ?? []);
+          widget.calendarController.visibleEvents[eventKey] ?? [],
+          widget.calendarController.visibleMarks[markKey] ?? []);
     } else {
       return _CellWidget(
         text: '${date.day}',
@@ -791,3 +818,4 @@ class _TableCalendarState extends State<TableCalendar>
     }
   }
 }
+

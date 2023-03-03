@@ -40,7 +40,7 @@ class CalendarController {
           ? _visibleDays.value.where((day) => !_isExtraDay(day)).toList()
           : _visibleDays.value;
 
-  /// `Map` of currently visible events.
+/// `Map` of currently visible events.
   Map<DateTime, List> get visibleEvents {
     if (_events == null) {
       return {};
@@ -48,6 +48,30 @@ class CalendarController {
 
     return Map.fromEntries(
       _events!.entries.where((entry) {
+        for (final day in visibleDays) {
+          if (_isSameDay(day, entry.key)) {
+            return true;
+          }
+        }
+
+        return false;
+      }),
+    );
+  }
+
+
+
+
+
+
+  /// `Map` of currently visible events.
+  Map<DateTime, List> get visibleMarks {
+    if (_marks == null) {
+      return {};
+    }
+
+    return Map.fromEntries(
+      _marks!.entries.where((entry) {
         for (final day in visibleDays) {
           if (_isSameDay(day, entry.key)) {
             return true;
@@ -79,6 +103,8 @@ class CalendarController {
   }
 
   Map<DateTime, List>? _events;
+  Map<DateTime, List>? _marks;
+
   Map<DateTime, List>? _holidays;
   late DateTime _focusedDay;
   late DateTime _selectedDay;
@@ -96,6 +122,8 @@ class CalendarController {
 
   void _init({
     required Map<DateTime, List> events,
+    required Map<DateTime, List> marks,
+    
     required Map<DateTime, List> holidays,
     DateTime? initialDay,
     required CalendarFormat initialFormat,
@@ -108,6 +136,7 @@ class CalendarController {
     required bool includeInvisibleDays,
   }) {
     _events = events;
+    _marks = marks;
     _holidays = holidays;
     _availableCalendarFormats = availableCalendarFormats;
     _startingDayOfWeek = startingDayOfWeek;
@@ -441,6 +470,9 @@ class CalendarController {
     return visibleEvents.keys.firstWhereOrNull((it) => _isSameDay(it, day));
   }
 
+  DateTime? _getMarkKey(DateTime day) {
+    return visibleMarks.keys.firstWhereOrNull((it) => _isSameDay(it, day));
+  }
   DateTime? _getHolidayKey(DateTime day) {
     return visibleHolidays.keys.firstWhereOrNull((it) => _isSameDay(it, day));
   }

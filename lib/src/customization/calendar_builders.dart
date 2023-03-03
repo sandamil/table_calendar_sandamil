@@ -7,12 +7,12 @@ part of table_calendar_null_safe;
 /// Note that most of the time, `events` param will be ommited, however it is there if needed.
 /// `events` param can be null.
 typedef FullBuilder = Widget Function(
-    BuildContext context, DateTime date, List events);
+    BuildContext context, DateTime date, List events, List marks);
 
 /// Builder signature for a list of event markers. Contains `date` and list of all `events` associated with that `date`.
 /// Both `events` and `holidays` params can be null.
 typedef FullListBuilder = List<Widget> Function(
-    BuildContext context, DateTime date, List events, List holidays);
+    BuildContext context, DateTime date, List events, List holidays, List marks);
 
 /// Builder signature for weekday names row. Contains `weekday` string, which is formatted by `dowTextBuilder`
 /// or by default function (DateFormat.E(widget.locale).format(date)), if `dowTextBuilder` is null.
