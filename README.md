@@ -21,13 +21,13 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  table_calendar_null_safe: ^2.0.0
+  table_calendar_sandamil: ^2.0.0
 ```
 
 Then import it to your project:
 
 ```dart
-import 'package:table_calendar_null_safe/table_calendar.dart';
+import 'package:table_calendar_sandamil/table_calendar.dart';
 ```
 
 And finally create the **TableCalendar** with a `CalendarController`:

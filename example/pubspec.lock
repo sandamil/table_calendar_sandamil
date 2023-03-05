@@ -115,6 +115,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  petitparser:
+    dependency: transitive
+    description:
+      name: petitparser
+      sha256: "32e46db8021f6d027d9221b937653f5c8aa043e0dc093998e18331912f22936b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.0"
+  rename_app:
+    dependency: "direct main"
+    description:
+      name: rename_app
+      sha256: "9db1121f65843e27f4e7a2ee3bef54d8cb6bc35fca5e5bda405be2a9e41e983b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   simple_gesture_detector:
     dependency: transitive
     description:
@@ -160,13 +176,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  table_calendar_null_safe:
+  table_calendar_sandamil:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "2.0.0"
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:
@@ -191,6 +207,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  xml:
+    dependency: transitive
+    description:
+      name: xml
+      sha256: "80d494c09849dc3f899d227a78c30c5b949b985ededf884cb3f3bcd39f4b447a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.1"
 sdks:
   dart: ">=2.19.0 <4.0.0"
   flutter: ">=3.3.0"

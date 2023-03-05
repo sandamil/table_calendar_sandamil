@@ -1,7 +1,7 @@
 //  Copyright (c) 2019 Aleksander Woźniak
 //  Licensed under Apache License v2.0
 
-part of table_calendar_null_safe;
+part of table_calendar_sandamil;
 
 const double _dxMax = 1.2;
 const double _dxMin = -1.2;
@@ -40,7 +40,7 @@ class CalendarController {
           ? _visibleDays.value.where((day) => !_isExtraDay(day)).toList()
           : _visibleDays.value;
 
-/// `Map` of currently visible events.
+  /// `Map` of currently visible events.
   Map<DateTime, List> get visibleEvents {
     if (_events == null) {
       return {};
@@ -58,11 +58,6 @@ class CalendarController {
       }),
     );
   }
-
-
-
-
-
 
   /// `Map` of currently visible events.
   Map<DateTime, List> get visibleMarks {
@@ -123,7 +118,6 @@ class CalendarController {
   void _init({
     required Map<DateTime, List> events,
     required Map<DateTime, List> marks,
-    
     required Map<DateTime, List> holidays,
     DateTime? initialDay,
     required CalendarFormat initialFormat,
@@ -473,6 +467,7 @@ class CalendarController {
   DateTime? _getMarkKey(DateTime day) {
     return visibleMarks.keys.firstWhereOrNull((it) => _isSameDay(it, day));
   }
+
   DateTime? _getHolidayKey(DateTime day) {
     return visibleHolidays.keys.firstWhereOrNull((it) => _isSameDay(it, day));
   }

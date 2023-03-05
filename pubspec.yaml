@@ -1,7 +1,7 @@
-name: table_calendar_null_safe
+name: table_calendar_sandamil
 description: Highly customizable, feature-packed Flutter Calendar with gestures, animations and multiple formats.
-version: 2.0.0
-homepage: https://github.com/aleksanderwozniak/table_calendar
+version: 1.0.0
+homepage: https://github.com/sandamil/table_calendar_sandamil
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
 
   intl: ^0.18.0
+  rename_app:
   simple_gesture_detector: ^0.2.0
 
 dev_dependencies:

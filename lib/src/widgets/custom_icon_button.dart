@@ -1,7 +1,7 @@
 //  Copyright (c) 2019 Aleksander Woźniak
 //  Licensed under Apache License v2.0
 
-part of table_calendar_null_safe;
+part of table_calendar_sandamil;
 
 class _CustomIconButton extends StatelessWidget {
   final Icon icon;
