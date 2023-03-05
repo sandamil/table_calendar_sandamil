@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
 
   intl: ^0.18.0
-  rename_app:
   simple_gesture_detector: ^0.2.0
 
 dev_dependencies:

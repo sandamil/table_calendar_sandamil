@@ -1,6 +1,7 @@
 # Table Calendar with Null safety and calendarController
 ## Features
 
+* Double events abaible
 * Extensive, yet easy to use API
 * Custom Builders for truly flexible UI
 * Complete programmatic control with CalendarController
@@ -21,7 +22,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  table_calendar_sandamil: ^2.0.0
+  table_calendar_sandamil: ^1.0.0
 ```
 
 Then import it to your project:
